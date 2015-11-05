@@ -16,7 +16,7 @@ for line in in_reader:
     str=line.split(u'\t')
     count=str.__len__()
     if(count<3):
-        break
+        continue
 
     #print count
     #print str
@@ -41,7 +41,7 @@ for line in test_reader:
     str=line.split(u'\t')
     count=str.__len__()
     if(count<2):
-        break
+        continue
 
     result=grocery.predict(str[1])
     resultlist.append((str[0],result))

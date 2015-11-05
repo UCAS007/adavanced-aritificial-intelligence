@@ -12,11 +12,15 @@ trainlist=[]
 # train #################################
 filein=codecs.open(trainFileName,'r','utf-8')
 in_reader=filein.readlines()
+i=0
 for line in in_reader:
+    i=i+1
+    if(i%5000==0):
+        print ("%d "%(i))+'#'*30
     str=line.split(u'\t')
     count=str.__len__()
     if(count<3):
-        break
+        continue
 
     #print count
     #print str
@@ -62,6 +66,8 @@ for line in test_reader:
 precision=TP/(TP+FP)
 recall=TP/(TP+FN)
 F=2*precision*recall/(precision+recall)
+
+print 'result is : '+"."*30
 print precision
 print recall
 print F
