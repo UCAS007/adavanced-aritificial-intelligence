@@ -7,7 +7,8 @@ testFileName='../data/test.txt'
 outputFileName='../output/upload.csv'
 
 # test ##################################
-grocery=Grocery('sample')
+#grocery=Grocery('sample')
+grocery=Grocery('version1.0')
 grocery.load()
 
 print 'start test'
@@ -27,7 +28,7 @@ for line in test_reader:
         print ("%d "%(i))+'#'*30
 
     if(content==''):
-        print line
+        print "test.py#"*3+line
     else:
         str=content.split('\t')
         len=str[0].__len__()
