@@ -6,7 +6,7 @@
 
 ## 数据集及项目介绍
 - [中国好创意大赛](http://www.wid.org.cn/project/2015ccf/index.php)
-
+- [百度云数据集](http://pan.baidu.com/s/1sjAD6Z7)
 
 ---
 

@@ -25,7 +25,7 @@ resultlist=[]
 i=0
 for line in validate_reader:
     i=i+1
-     if(i%5000==0):
+    if(i%5000==0):
         print ("%d "%(i))+'#'*30
 
     str=line.split(u',')
@@ -49,12 +49,21 @@ for line in validate_reader:
 
 precision=TP/(TP+FP)
 recall=TP/(TP+FN)
-F=2*precision*recall/(precision+recall)
 
+P1=precision
+R1=recall
+F1=0.65*P1+0.35*R1
+P0=TN/(TN+FN)
+R0=TN/(TN+FP)
+F0=0.65*P0+0.35*R0
+
+F=0.7*F1+0.3*F0
 
 print 'result is : '+"."*30
 print precision
 print recall
+print F1
+print F0
 print F
 
 fileValidate.close()
