@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 import csv,codecs
 from tgrocery import Grocery
+import preprocessing as pp
 
 trainFileName='../data/train.txt'
 validateFileName='../data/validate.txt'
 outputFileName='../output/result.txt'
 
 # validate ##################################
-grocery=Grocery('sample')
+#grocery=Grocery('sample')
+grocery=Grocery('version1.0')
 grocery.load()
 
 print 'start test'
@@ -24,28 +26,30 @@ fileOutput=codecs.open(outputFileName,'w','utf-8')
 resultlist=[]
 i=0
 for line in validate_reader:
+    content=pp.getcontent(validate_reader,i)
     i=i+1
     if(i%5000==0):
         print ("%d "%(i))+'#'*30
-
-    str=line.split(u',')
-    #import pdb; pdb.set_trace()
-    #print line
-    result=grocery.predict(str[1])
-    #print result
-    #import pdb; pdb.set_trace()
-    if(result==str[0]):
-        if(str[0]==u'0'):
-            TN=TN+1
-        else:
-            TP=TP+1
+    #if(i>10):
+        #break
+    if(content==''):
+        print line
     else:
-        if(str[0]==u'0'):
-            FP=FP+1
-            fileOutput.write('FP: '+line+' \n')
+        str=content.split('\t')
+        len=str[0].__len__()
+        result=grocery.predict(content[len+4:])
+        if(result==str[1]):
+            if(str[1]==u'0'):
+                TN=TN+1
+            else:
+                TP=TP+1
         else:
-            FN=FN+1
-            fileOutput.write('FN: '+line+' \n')
+            if(str[1]==u'0'):
+                FP=FP+1
+                fileOutput.write('FP: '+line+' \n')
+            else:
+                FN=FN+1
+                fileOutput.write('FN: '+line+' \n')
 
 precision=TP/(TP+FP)
 recall=TP/(TP+FN)
