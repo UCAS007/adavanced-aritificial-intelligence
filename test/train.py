@@ -3,6 +3,7 @@
 import csv,codecs
 from tgrocery import Grocery
 import preprocessing as pp
+import jieba
 
 def getTrainTextList():
     rawFileName='../data/rawtrain.txt'
@@ -29,7 +30,9 @@ def getTrainTextList():
         else:
             str=content.split('\t')
             len=str[0].__len__()
-            trainstr=(str[1],content[len+3:])
+            cuttext=jieba.cut(content[len+3:])
+            jointext=' '.join(cuttext)
+            trainstr=(str[1],jointext)
             trainlist.append(trainstr)
 
     filein.close()

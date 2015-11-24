@@ -37,7 +37,7 @@ for line in validate_reader:
     else:
         str=content.split('\t')
         len=str[0].__len__()
-        result=grocery.predict(content[len+4:])
+        result=grocery.predict(content[len+3:])
         if(result==str[1]):
             if(str[1]==u'0'):
                 TN=TN+1

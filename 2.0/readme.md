@@ -23,3 +23,14 @@ In [53]: print y
 # fast start text classifys
 - http://scikit-learn.org/stable/auto_examples/text/document_clustering.html#example-text-document-clustering-py
 
+# result
+```
+done in 1213.592s
+
+Best score: 0.997
+Best parameters set:
+	clf__alpha: 1e-06
+	clf__penalty: 'l2'
+	vect__max_df: 1.0
+	vect__ngram_range: (1, 2)
+```
