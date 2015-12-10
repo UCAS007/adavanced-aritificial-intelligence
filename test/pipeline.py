@@ -55,14 +55,15 @@ else:
 pipeline = Pipeline([
     ('vect', CountVectorizer()),
     ('tfidf', TfidfTransformer()),
-    ('clf', SGDClassifier()),
+    ('clf', SGDClassifier(class_weight='balanced')),
 ])
 
+trainNum=200000;
 parameters = {
     'vect__max_df': (0.5, 0.75, 1.0),
     #'vect__max_features': (None, 5000, 10000, 50000),
     'vect__ngram_range': ((1, 1), (1, 2)),  # unigrams or bigrams
-    'tfidf__use_idf': (True, False),
+    #'tfidf__use_idf': (True, False),
     'tfidf__norm': ('l1', 'l2'),
     'clf__alpha': (0.00001, 0.000001),
     'clf__penalty': ('l2', 'elasticnet'),
@@ -82,7 +83,7 @@ if __name__ == "__main__":
     print("parameters:")
     pprint(parameters)
     t0 = time()
-    grid_search.fit(data,target)
+    grid_search.fit(data[0:trainNum],target[0:trainNum])
     print("done in %0.3fs" % (time() - t0))
     print()
 

@@ -58,9 +58,16 @@ print("Default Mode: " + "/ ".join(seg_list))  # 精确模式
 P=TP/(TP+FP)
 R=TP/(TP+FN)
 F=2*P*R/(P+R)
+
+pipeline.set_params(vect__max_df=1.0,clf__alpha=0.00001,clf__penalty='l2',vect__ngram_range=(1,2))
+
 train result: P=0.973347,R=0.999111,F=0.986061
 validate result: P=0.822481,R=0.980710,F=0.894653
 
+pipeline.set_params(vect__max_df=1.0,clf__alpha=0.00001,clf__penalty='l2',vect__ngram_range=(1,1))
+
+train result: P=0.951359,R=0.998716,F=0.974463
+validate result: P=0.893005,R=0.967067,F=0.928561
 ```
 
 # test/pipeline.py search space!!

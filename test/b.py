@@ -56,7 +56,7 @@ pipeline = Pipeline([
 ])
 
 
-pipeline.set_params(vect__max_df=1.0,clf__alpha=0.00001,clf__penalty='l2',vect__ngram_range=(1,2))
+pipeline.set_params(vect__max_df=1.0,clf__alpha=0.00001,clf__penalty='l2',vect__ngram_range=(1,1))
 trainNum=100000
 pipeline.fit(data[0:trainNum],target[0:trainNum])
 
