@@ -57,8 +57,13 @@ pipeline = Pipeline([
 
 
 pipeline.set_params(vect__max_df=1.0,clf__alpha=0.00001,clf__penalty='l2',vect__ngram_range=(1,1))
-trainNum=100000
+trainNum=data.__len__()
 pipeline.fit(data[0:trainNum],target[0:trainNum])
+
+fout=open('pipeline.pkl','w')
+pickle.dump(pipeline,fout)
+fout.close()
+
 
 #################################################
 print 'train result '+"#"*30
@@ -91,35 +96,3 @@ R=TP/(TP+FN)
 F=2*P*R/(P+R)
 
 print('train result: P=%f,R=%f,F=%f\n'%(P,R,F))
-
-################################################
-print 'validate result'+"#"*30
-prec=pipeline.predict(data[trainNum:])
-expected=target[trainNum:]
-
-print("Classification report for classifier :\n%s\n"
-      % (metrics.classification_report(expected, prec)))
-
-TP=0.0
-TN=0.0
-FP=0.0
-FN=0.0
-
-N=data.__len__()
-for i in range(trainNum,N):
-    if(prec[i-trainNum]==expected[i-trainNum]):
-        if(prec[i-trainNum]==u'1'):
-            TP=TP+1
-        else:
-            TN=TN+1
-    else:
-        if(prec[i-trainNum]==u'1'):
-            FP=FP+1
-        else:
-            FN=FN+1
-
-P=TP/(TP+FP)
-R=TP/(TP+FN)
-F=2*P*R/(P+R)
-
-print('validate result: P=%f,R=%f,F=%f\n'%(P,R,F))

@@ -5,7 +5,7 @@ from tgrocery import Grocery
 import preprocessing as pp
 import jieba
 
-def getTrainTextList():
+def getTrainTextList(cutModel=False):
     rawFileName='../data/rawtrain.txt'
     trainFileName='../data/train.txt'
     validateFileName='../data/validate.txt'
@@ -30,7 +30,7 @@ def getTrainTextList():
         else:
             str=content.split('\t')
             len=str[0].__len__()
-            cuttext=jieba.cut(content[len+3:])
+            cuttext=jieba.cut(content[len+3:].strip(),cut_all=cutModel)
             jointext=' '.join(cuttext)
             trainstr=(str[1],jointext)
             trainlist.append(trainstr)
@@ -38,7 +38,7 @@ def getTrainTextList():
     filein.close()
     return trainlist
 
-def getValidateTextList():
+def getValidateTextList(cutModel=False):
     rawFileName='../data/rawtrain.txt'
     trainFileName='../data/train.txt'
     validateFileName='../data/validate.txt'
@@ -63,7 +63,7 @@ def getValidateTextList():
         else:
             str=content.split('\t')
             len=str[0].__len__()
-            cuttext=jieba.cut(content[len+3:])
+            cuttext=jieba.cut(content[len+3:].strip(),cut_all=cutModel)
             jointext=' '.join(cuttext)
             trainstr=(str[1],jointext)
             trainlist.append(trainstr)
@@ -71,7 +71,7 @@ def getValidateTextList():
     filein.close()
     return trainlist
 
-def getAllTrainTextList():
+def getAllTrainTextList(cutModel=False):
     rawFileName='../data/rawtrain.txt'
     trainFileName='../data/train.txt'
     validateFileName='../data/validate.txt'
@@ -96,7 +96,7 @@ def getAllTrainTextList():
         else:
             str=content.split('\t')
             len=str[0].__len__()
-            cuttext=jieba.cut(content[len+3:])
+            cuttext=jieba.cut(content[len+3:].strip(),cut_all=cutModel)
             jointext=' '.join(cuttext)
             trainstr=(str[1],jointext)
             trainlist.append(trainstr)
@@ -104,6 +104,35 @@ def getAllTrainTextList():
     filein.close()
     return trainlist
 
+
+def getTestTextList(cutModel=False):
+    testFileName='../data/test.txt'
+
+    filetest=codecs.open(testFileName,'r','utf-8')
+    test_reader=filetest.readlines()
+    testTextList=[]
+
+    i=0
+    for line in test_reader:
+        content=pp.getcontent(test_reader,i)
+        i=i+1
+        #if(i>10):
+            #break
+        if(i%5000==0):
+            print ("%d "%(i))+'#'*30
+
+        if(content==''):
+            print "test.py#"*3+line
+        else:
+            str=content.split('\t')
+            len=str[0].__len__()
+            #result=pipeline.predict(content[len+1:])
+            cuttext=jieba.cut(content[len+1:].strip(),cut_all=cutModel)
+            jointext=' '.join(cuttext)
+            testTextList.append(jointext)
+
+    filetest.close()
+    return testTextList
 
 def train():
     print 'train start '+'.'*30
